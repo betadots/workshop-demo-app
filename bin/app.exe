@@ -1,16 +1,59 @@
 #!/bin/bash
-if [ "$1" == "list" ]; then
-  cat /opt/app/etc/app.cfg.yml
+function usage() {
+  echo "Usage: $0 ['list', 'set', 'rm', 'version']"
+}
+function usage_set() {
+  echo "Usage: $0 set <key> <value>"
+}
+function usage_rm() {
+  echo "Usage: $0 rm <key>"
+}
+if [ "x$1x" == "xx" ]; then
+  usage
   exit 0
 fi
-if [ "$1" == "set" ]; then
-  echo "Dummy: Setzen"
-  exit 0
-fi
-if [ "$1" == "version" ]; then
-  echo "app version: 3.1.2-git-e4f10ac"
-  exit 0
-fi
+case $1 in
+  "list")
+    cat /opt/app/etc/app.cfg.yml
+    exit 0
+  ;;
+  "version")
+    echo "app version: 3.1.2-git-e4f10ac"
+    exit 0
+  ;;
+  "set")
+    if [ "x$2x" == "xx" ]; then
+      usage_set
+      exit 0
+    fi
+    if [ "x$3x" == "xx" ]; then
+      usage_set
+      exit 0
+    fi
+    # check if key exists:
+    grep $2 /opt/app/etc/app.cfg.yml 1>/dev/null 2>&1
+    result=$?
+    if [ $result == 0 ]; then
+      echo "replacing $2"
+      old_string=$(grep $2 /opt/app/etc/app.cfg.yml)
+      sed -i "s/$old_string/$2: $3/" /opt/app/etc/app.cfg.yml
+    else
+      echo "adding $2"
+      echo "$2: $3" >> /opt/app/etc/app.cfg.yml
+    fi
+  ;;
+  "rm")
+    if [ "x$2x" == "xx" ]; then
+      usage_rm
+      exit 0
+    fi
+    grep -v $2 /opt/app/etc/app.cfg.yml >> /opt/app/etc/app.cfg.yml.tmp
+    mv /opt/app/etc/app.cfg.yml.tmp /opt/app/etc/app.cfg.yml
+  ;;
+  *)
+    usage
+    exit 0
+  ;;
+esac
 
-echo "Usage: $0 ['list', 'set', 'version']"
 
