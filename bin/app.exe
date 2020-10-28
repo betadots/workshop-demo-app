@@ -35,7 +35,7 @@ case $1 in
     result=$?
     if [ $result == 0 ]; then
       echo "replacing $2"
-      old_string=$(grep $2 /opt/app/etc/app.cfg.yml)
+      old_string=$(grep ^$2 /opt/app/etc/app.cfg.yml)
       sed -i "s/$old_string/$2: $3/" /opt/app/etc/app.cfg.yml
     else
       echo "adding $2"

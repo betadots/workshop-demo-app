@@ -1,2 +1,5 @@
 ---
 debug: false
+key: value
+loglevel: debug
+user: root
