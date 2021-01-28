@@ -1,6 +1,6 @@
 #!/bin/bash
 function usage() {
-  echo "Usage: $0 ['list', 'set', 'rm', 'version']"
+  echo "Usage: $0 ['list', 'set', 'rm', 'version', 'status']"
 }
 function usage_set() {
   echo "Usage: $0 set <key> <value>"
@@ -20,6 +20,9 @@ case $1 in
   "version")
     echo "app version: 3.1.2-git-e4f10ac"
     exit 0
+  ;;
+  "status")
+    echo "app - Status: OK"
   ;;
   "set")
     if [ "x$2x" == "xx" ]; then
