@@ -1,9 +1,9 @@
 # Workshop Demo App
 
-This applicatoin is used by the example42 [Ruby for Puppet training](https://example42.com/training/).
+This applicatoin is used by the betadots [Ruby for Puppet training](https://betadots.de/).
 Within this dummy application we demo an application which can not be configured by managing config files, but which must be configured using a command.
 
-Deploy this application to /opt/app by running `git clone https://github.com/tuxmea/workshop-demo-app /opt/app`
+Deploy this application to /opt/app by running `git clone https://github.com/betadots/workshop-demo-app /opt/app`
 
 You then have an executable which will allow you to read, set and change config settings.
 
